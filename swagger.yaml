@@ -1,0 +1,66 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: SiteCompli Retail API
+  description: s an example to demonstrate features in the swagger-2.0 specification
+  termsOfService: http://sitecompli.com/
+  contact:
+    name: Athena API Team
+    email: sandeep@sitecompli.com
+    url: http://wwwsitcompli.com
+  license:
+    name: SiteCompli
+    url: https://github.com/sandeep
+host: polls.apiblueprint.org
+basePath: 
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /agencies:
+    get:
+      responses:
+        "200":
+          description: agencies response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Agencies'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    
+definitions:
+  Agencies:
+    - state_province:
+      id: 25
+      value: New York
+      city:
+        id: 60
+        value: Albany
+      agency_name: Albany Public Works - Permit and Inspection Division
+      county:
+        id: 
+        value: 
+      government_level: 1
+      agency_id: 1
+    - state_province:
+      id: 49
+      value: Virginia
+      city:
+        id: 63
+        value: Alexandria
+      agency_name: Alexandria Department of Buildings
+      county:
+        id: 
+        value: 
+      government_level: 1
+      agency_id: 2
+  Error:
+    required:
+      - code
+      - message
