@@ -12,7 +12,7 @@ info:
     name: SiteCompli
     url: https://github.com/sandeep
 host: polls.apiblueprint.org
-basePath: 
+basePath:
 schemes:
   - http
 consumes:
@@ -28,39 +28,69 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Agencies'
+              $ref: 'AgencyResponse.json'
         default:
           description: unexpected error
           schema:
-            $ref: '#/definitions/Error'
-    
-definitions:
-  Agencies:
-    - state_province:
-      id: 25
-      value: New York
-      city:
-        id: 60
-        value: Albany
-      agency_name: Albany Public Works - Permit and Inspection Division
-      county:
-        id: 
-        value: 
-      government_level: 1
-      agency_id: 1
-    - state_province:
-      id: 49
-      value: Virginia
-      city:
-        id: 63
-        value: Alexandria
-      agency_name: Alexandria Department of Buildings
-      county:
-        id: 
-        value: 
-      government_level: 1
-      agency_id: 2
-  Error:
-    required:
-      - code
-      - message
+            $ref: 'Error.json'
+    post:
+      description: Creates a new Agencies in the System.
+      parameters:
+        - name: Agency
+          in: body
+          description: Agency to add to the store
+          required: true
+          schema:
+            $ref: 'AgencyRequest.json'
+      responses:
+        "200":
+          description: Agecny response
+          schema:
+            $ref: 'Agency.json'
+        default:
+          description: unexpected error
+          schema:
+            $ref: 'Error.json'
+  /agency/{id}:
+    get:
+      description: Returns a agency based on a ID
+      operationId: find Agency by id
+      parameters:
+        - id: id
+          in: path
+          description: ID of Agency fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: agency response
+          schema:
+              $ref: 'SingleAgencyResponse.json'
+        default:
+          description: unexpected error
+          schema:
+            $ref: 'Error.json'
+    put:
+      description: update a singleinfo based on the ID supplied
+      operationId: ID of Agency
+      parameters:
+        - id: id
+          in: path
+          description: ID of Agency to patch
+          required: true
+          schema:
+            {
+              "value": "new agency name"
+            }
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: Agency updated
+          schema:
+            $ref: 'Agency.json'
+        default:
+          description: unexpected error
+          schema:
+            $ref: 'Error.json'
